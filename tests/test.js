@@ -11,9 +11,9 @@ module.exports.todoMVCTest = function (frameworkName, baseUrl, speedMode, laxMod
 
 	test.describe('TodoMVC - ' + frameworkName, function () {
 
-		var TODO_ITEM_ONE = 'buy some cheese';
-		var TODO_ITEM_TWO = 'feed the cat';
-		var TODO_ITEM_THREE = 'book a doctors appointment';
+		var TODO_ITEM_ONE = 'buy some sausages';
+		var TODO_ITEM_TWO = 'Сапог';
+		var TODO_ITEM_THREE = 'Посетить врача';
 		var browser, testOps, page;
 
 		// a number of tests use this set of ToDo items.
@@ -90,18 +90,18 @@ module.exports.todoMVCTest = function (frameworkName, baseUrl, speedMode, laxMod
 			});
 		}
 
-		test.describe('When page is initially opened', function () {
+		test.describe('Находясь на сайте, обновить страницу браузера', function () {
 
-			test.it('should focus on the todo input field', function (done) {
+			test.it('Курсор мыши находиться в состоянии ввода в поле "What needs to be done?" ', function (done) {
 				testOps.assertNewInputFocused()
 					.then(function () { done(); });
 			});
 
 		});
 
-		test.describe('No Todos', function () {
+		test.describe('Отсутвие в списке элементов', function () {
 
-			test.it('should hide #main and #footer', function (done) {
+			test.it('скрытие элементов #main и #footer', function (done) {
 				testOps.assertItemCount(0);
 				testOps.assertMainSectionVisibility(false);
 				testOps.assertFooterVisibility(false)
@@ -110,9 +110,9 @@ module.exports.todoMVCTest = function (frameworkName, baseUrl, speedMode, laxMod
 
 		});
 
-		test.describe('New Todo', function () {
+		test.describe('Ввести в поле ввода любое значение (слово, цифру и т.п.) и нажать на кноаку Enter', function () {
 
-			test.it('should allow me to add todo items', function (done) {
+			test.it('Список элементов пополняется', function (done) {
 				page.enterItem(TODO_ITEM_ONE);
 				testOps.assertItems([TODO_ITEM_ONE]);
 				page.enterItem(TODO_ITEM_TWO);
@@ -120,13 +120,13 @@ module.exports.todoMVCTest = function (frameworkName, baseUrl, speedMode, laxMod
 					.then(function () { done(); });
 			});
 
-			test.it('should clear text input field when an item is added', function (done) {
+			test.it('Введенные данные стираются из основного поле ввода и добавляются к списку "todo"', function (done) {
 				page.enterItem(TODO_ITEM_ONE);
 				testOps.assertNewItemInputFieldText('')
 					.then(function () { done(); });
 			});
 
-			test.it('should append new items to the bottom of the list', function (done) {
+			test.it('Каждый последующий элемент добавляется в конец списка', function (done) {
 				createStandardItems();
 				testOps.assertItemCount(3);
 				testOps.assertItemText(0, TODO_ITEM_ONE);
@@ -135,13 +135,13 @@ module.exports.todoMVCTest = function (frameworkName, baseUrl, speedMode, laxMod
 					.then(function () { done(); });
 			});
 
-			test.it('should trim text input', function (done) {
+			test.it('Если введены данные в поле ввода', function (done) {
 				page.enterItem('   ' + TODO_ITEM_ONE + '  ');
 				testOps.assertItemText(0, TODO_ITEM_ONE)
 					.then(function () { done(); });
 			});
 
-			test.it('should show #main and #footer when items added', function (done) {
+			test.it('показ #main и #footer при добавлении новых элементов в список', function (done) {
 				page.enterItem(TODO_ITEM_ONE);
 				testOps.assertMainSectionVisibility(true);
 				testOps.assertFooterVisibility(true)
@@ -150,17 +150,17 @@ module.exports.todoMVCTest = function (frameworkName, baseUrl, speedMode, laxMod
 
 		});
 
-		test.describe('Mark all as completed', function () {
+		test.describe('Все элементы списка отмечены как "Завершенные"', function () {
 
 			test.beforeEach(createStandardItems);
 
-			test.it('should allow me to mark all items as completed', function (done) {
+			test.it('возможность выборы всех завершенных элементов', function (done) {
 				page.clickMarkAllCompletedCheckBox();
 				testOps.assertItemCompletedStates([true, true, true])
 					.then(function () { done(); });
 			});
 
-			test.it('should correctly update the complete all checked state', function (done) {
+			test.it('правильно обновлять состояние complete all', function (done) {
 				// manually check all items
 				page.toggleItemAtIndex(0);
 				page.toggleItemAtIndex(1);
@@ -171,7 +171,7 @@ module.exports.todoMVCTest = function (frameworkName, baseUrl, speedMode, laxMod
 					.then(function () { done(); });
 			});
 
-			test.it('should allow me to clear the completion state of all items', function (done) {
+			test.it('возможность снятия галочек завершенности со всех элементов', function (done) {
 				page.clickMarkAllCompletedCheckBox();
 				page.clickMarkAllCompletedCheckBox();
 
@@ -179,7 +179,7 @@ module.exports.todoMVCTest = function (frameworkName, baseUrl, speedMode, laxMod
 					.then(function () { done(); });
 			});
 
-			test.it('complete all checkbox should update state when items are completed / cleared', function (done) {
+			test.it('Кнопка complete all должна обновляться каждый раз когда элемент отмечен как completed или cleared', function (done) {
 				page.clickMarkAllCompletedCheckBox();
 				testOps.assertCompleteAllCheckedStatus(true);
 
@@ -195,9 +195,9 @@ module.exports.todoMVCTest = function (frameworkName, baseUrl, speedMode, laxMod
 
 		});
 
-		test.describe('Item', function () {
+		test.describe('Элемент', function () {
 
-			test.it('should allow me to mark items as complete', function (done) {
+			test.it('возможность отметить элемент как complete', function (done) {
 				page.enterItem(TODO_ITEM_ONE);
 				page.enterItem(TODO_ITEM_TWO);
 
@@ -209,7 +209,7 @@ module.exports.todoMVCTest = function (frameworkName, baseUrl, speedMode, laxMod
 					.then(function () { done(); });
 			});
 
-			test.it('should allow me to un-mark items as complete', function (done) {
+			test.it('возможность убрать галочку с элемента с тем, чтобы убрать статус complete', function (done) {
 				page.enterItem(TODO_ITEM_ONE);
 				page.enterItem(TODO_ITEM_TWO);
 
@@ -231,25 +231,25 @@ module.exports.todoMVCTest = function (frameworkName, baseUrl, speedMode, laxMod
 					.then(function () { done(); });
 			});
 
-			test.it('should focus the input', function (done) {
+			test.it('делает поле ввода активным', function (done) {
 				testOps.assertItemInputFocused();
 				testOps.assertNewInputBlurred()	// Unnecessary? The HTML spec dictates that only one element can be focused.
 					.then(function () { done(); });
 			});
 
-			test.it('should hide other controls when editing', function (done) {
+			test.it('скрытие дополнительных кнопок при редактировании', function (done) {
 				testOps.assertItemToggleIsHidden(1);
 				testOps.assertItemLabelIsHidden(1)
 					.then(function () { done(); });
 			});
 
-			test.it('should save edits on enter', function (done) {
+			test.it('сохранение при нажа enter', function (done) {
 				page.editItemAtIndex(1, 'buy some sausages' + webdriver.Key.ENTER);
 				testOps.assertItems([TODO_ITEM_ONE, 'buy some sausages', TODO_ITEM_THREE])
 					.then(function () { done(); });
 			});
 
-			test.it('should save edits on blur', function (done) {
+			test.it('сохранение при нажатии на область вне поля ввода', function (done) {
 				page.editItemAtIndex(1, 'buy some sausages');
 				// click a toggle button so that the blur() event is fired
 				page.toggleItemAtIndex(0);
@@ -257,19 +257,19 @@ module.exports.todoMVCTest = function (frameworkName, baseUrl, speedMode, laxMod
 					.then(function () { done(); });
 			});
 
-			test.it('should trim entered text', function (done) {
+			test.it('сокращает введенные данные', function (done) {
 				page.editItemAtIndex(1, '    buy some sausages  ' + webdriver.Key.ENTER);
 				testOps.assertItems([TODO_ITEM_ONE, 'buy some sausages', TODO_ITEM_THREE])
 					.then(function () { done(); });
 			});
 
-			test.it('should remove the item if an empty text string was entered', function (done) {
+			test.it('Удаление элемента при отсутвии вводимой информации в поле ввода', function (done) {
 				page.editItemAtIndex(1, webdriver.Key.ENTER);
 				testOps.assertItems([TODO_ITEM_ONE, TODO_ITEM_THREE])
 					.then(function () { done(); });
 			});
 
-			test.it('should cancel edits on escape', function (done) {
+			test.it('Прекращение редактирования при нажатии на Escape', function (done) {
 				page.editItemAtIndex(1, 'foo' + webdriver.Key.ESCAPE);
 				testOps.assertItems([TODO_ITEM_ONE, TODO_ITEM_TWO, TODO_ITEM_THREE])
 					.then(function () { done(); });
@@ -279,7 +279,7 @@ module.exports.todoMVCTest = function (frameworkName, baseUrl, speedMode, laxMod
 
 		test.describe('Counter', function () {
 
-			test.it('should display the current number of todo items', function (done) {
+			test.it('должно показывать оставшееся количество элементов', function (done) {
 				page.enterItem(TODO_ITEM_ONE);
 				testOps.assertItemCountText('1 item left');
 				page.enterItem(TODO_ITEM_TWO);
